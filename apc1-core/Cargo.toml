@@ -1,0 +1,11 @@
+[package]
+name = "apc1-core"
+version = "0.1.0"
+description = "Driver for the Air Purification Combo ONE (APC1) devices from ScioSense."
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+
+[dependencies]
+thiserror = "1.0.61"

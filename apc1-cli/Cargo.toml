@@ -1,0 +1,14 @@
+[package]
+name = "apc1-cli"
+version = "0.1.0"
+description = "Command-line interface to interact with APC1 devices from ScioSense via i2c-dev."
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+
+[dependencies]
+anyhow = "1.0.86"
+clap = { version = "4", features = ["cargo", "derive"] }
+i2cdev = "0.6.1"
+apc1-core = {version = "0.1", path = "../apc1-core"}

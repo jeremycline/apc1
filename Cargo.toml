@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+members = [
+    "apc1-core",
+    "apc1-cli",
+]
+
+[workspace.package]
+edition = "2021"
+license = "GPL-2.0"
+readme = "README.md"
+repository = "https://github.com/jeremycline/apc1/"
