@@ -26,60 +26,60 @@ use std::fmt::Display;
 #[derive(Debug, PartialEq, Eq)]
 pub struct Measurement {
     /// PM1.0 mass concentration in ug/m3; range 0-500.
-    pm1_0: u16,
+    pub pm1_0: u16,
     /// PM2.5 mass concentration in ug/m3; range 0-1,000.
-    pm2_5: u16,
+    pub pm2_5: u16,
     /// PM10 mass concentration in ug/m3; range 0-1,500.
-    pm10: u16,
+    pub pm10: u16,
     /// PM1.0 mass concentration in atmospheric environment in ug/m3; range 0-500.
-    pm1_0_in_air: u16,
+    pub pm1_0_in_air: u16,
     /// PM2.5 mass concentration in atmospheric environment in ug/m3; range 0-1,000.
-    pm2_5_in_air: u16,
+    pub pm2_5_in_air: u16,
     /// PM10 mass concentration in atmospheric environment in ug/m3; range 0-1,500.
-    pm10_in_air: u16,
+    pub pm10_in_air: u16,
     /// Number of particles with diameter >0.3 micrometers in 0.1 liters of air; range 0-65535.
-    um_0_3_particles: u16,
+    pub um_0_3_particles: u16,
     /// Number of particles with diameter >0.5 micrometers in 0.1 liters of air; range 0-65535.
-    um_0_5_particles: u16,
+    pub um_0_5_particles: u16,
     /// Number of particles with diameter >1.0 micrometers in 0.1 liters of air; range 0-65535.
-    um_1_particles: u16,
+    pub um_1_particles: u16,
     /// Number of particles with diameter >2.5 micrometers in 0.1 liters of air; range 0-65535.
-    um_2_5_particles: u16,
+    pub um_2_5_particles: u16,
     /// Number of particles with diameter >5.0 micrometers in 0.1 liters of air; range 0-65535.
-    um_5_particles: u16,
+    pub um_5_particles: u16,
     /// Number of particles with diameter >10.0 micrometers in 0.1 liters of air; range 0-65535.
-    um_10_particles: u16,
+    pub um_10_particles: u16,
     /// TVOC output in ppb; range 0-65,000.
-    tvoc: u16,
+    pub tvoc: u16,
     /// CO2 equivalents in ppm, range 400-65,000
-    eco2: u16,
+    pub eco2: u16,
     /// Reserved field.
     _reserved: u16,
     /// Temperature compensation in units of 0.1C; range 0-500 (0-50C). Compensation only valid for the module when the inlet and outlet is facing downwards (orientation 4 - see Section 9.2 of the datasheet).
-    t_comp: u16,
+    pub t_comp: u16,
     /// Relative humidity (RH) compensation in units of 0.1% RH; range 0-1000
     /// (0-100% RH). Compensation only valid for the module when the inlet and
     /// outlet is facing downwards (orientation 4 - see Section 9.2 of the
     /// datasheet).
-    rh_comp: u16,
+    pub rh_comp: u16,
     // Uncompensated temperature measurement in units of 0.1C; range 0-500 (0-50C).
-    t_raw: u16,
+    pub t_raw: u16,
     /// Uncompensated relative humidity (RH) in units of 0.1% RH; range 0-1000.
-    rh_raw: u16,
+    pub rh_raw: u16,
     /// Gas sensor raw resistance value RS0; range 100-50M mapped to 1k-10M Ohms.
-    rs_0: u32,
+    pub rs_0: u32,
     /// Unused raw resistence value.
-    rs_1: u32,
+    pub rs_1: u32,
     /// Gas sensor raw resistance value for RS2; range 100-50M mapped to 1k-10M Ohms.
-    rs_2: u32,
+    pub rs_2: u32,
     /// Gas sensor raw resistance value for RS3; range 100-50M mapped to 1k-10M Ohms.
-    rs_3: u32,
+    pub rs_3: u32,
     /// The Air Quality Index according to the UBA Classification of TVOC value; range 1-5.
-    aqi: u8,
+    pub aqi: u8,
     /// Reserved field.
     __reserved: u8,
     /// Device Firmware version.
-    version: u8,
+    pub version: u8,
 }
 
 impl TryFrom<&[u8; 64]> for Measurement {
@@ -226,14 +226,14 @@ impl Display for DeviceErrorCode {
 #[derive(Debug, PartialEq, Eq)]
 pub struct Module {
     /// The module's name and type encoded as ASCII.
-    name_and_type: String,
+    pub name_and_type: String,
     /// Module serial number.
-    serial_number: u64,
+    pub serial_number: u64,
     /// The delimiter character in the name_and_type string between the name and type.
-    delimiter: char,
+    pub delimiter: char,
     /// The module's firmware version.
-    fw_version_major: u8,
-    fw_version_minor: u8,
+    pub fw_version_major: u8,
+    pub fw_version_minor: u8,
 }
 
 impl TryFrom<&[u8; 23]> for Module {
