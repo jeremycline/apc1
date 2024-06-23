@@ -1,0 +1,33 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n                INSERT INTO apc_reading (\n                    measurement_time,\n                    location,\n                    device_sn,\n                    tvoc,\n                    eco2,\n                    aqi,\n                    temperature,\n                    humidity,\n                    pm1_0,\n                    pm2_5,\n                    pm10,\n                    pm1_0_in_air,\n                    pm2_5_in_air,\n                    pm10_in_air,\n                    um0_3_particles,\n                    um0_5_particles,\n                    um1_particles,\n                    um2_5_particles,\n                    um5_particles,\n                    um10_particles\n                )\n                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)\n                ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Timestamptz",
+        "Text",
+        "Text",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "b98b9ee2eb5a3d3f609087d6059b0e8faf63c8deae153d048889e958af291265"
+}
