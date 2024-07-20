@@ -55,14 +55,16 @@ pub struct Measurement {
     pub eco2: u16,
     /// Reserved field.
     _reserved: u16,
-    /// Temperature compensation in units of 0.1C; range 0-500 (0-50C). Compensation only valid for the module when the inlet and outlet is facing downwards (orientation 4 - see Section 9.2 of the datasheet).
+    /// Temperature compensation in units of 0.1C; range 0-500 (0-50C).
+    /// Compensation only valid for the module when the inlet and outlet is
+    /// facing downwards (orientation 4 - see Section 9.2 of the datasheet).
     pub t_comp: u16,
     /// Relative humidity (RH) compensation in units of 0.1% RH; range 0-1000
     /// (0-100% RH). Compensation only valid for the module when the inlet and
     /// outlet is facing downwards (orientation 4 - see Section 9.2 of the
     /// datasheet).
     pub rh_comp: u16,
-    // Uncompensated temperature measurement in units of 0.1C; range 0-500 (0-50C).
+    /// Uncompensated temperature measurement in units of 0.1C; range 0-500 (0-50C).
     pub t_raw: u16,
     /// Uncompensated relative humidity (RH) in units of 0.1% RH; range 0-1000.
     pub rh_raw: u16,
