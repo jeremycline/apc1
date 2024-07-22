@@ -117,7 +117,7 @@ pub async fn main() -> anyhow::Result<()> {
             }
         }
         Request::Measurement => {
-            let command = vec![0x42, 0x4d, 0xe4, 0x00, 0x01, 0x01, 0x74];
+            let command = vec![0x42, 0x4d, 0xe4, 0x00, 0x0F, 0x01, 0x74];
             let mut base_addr = 0x40_u8;
             for b in command.into_iter() {
                 dev.smbus_write_byte_data(base_addr, b)
