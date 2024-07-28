@@ -107,7 +107,7 @@ pub mod uart {
 
     impl Command {
         /// Convert the command to an array of bytes, suitable to be written to a UART device.
-        pub fn as_bytes(&self) -> [u8; 7] {
+        pub fn to_bytes(&self) -> [u8; 7] {
             // It would be nice for this to be const at some point
             match self {
                 Command::SetActiveMeasurement => {
