@@ -49,17 +49,8 @@ fn read_sensor(
     dest: mpsc::Sender<(OffsetDateTime, Measurement)>,
 ) -> anyhow::Result<()> {
     let interval = std::time::Duration::from_secs(interval);
-
-    let mut base_addr = 0x40_u8;
-    for b in i2c::SET_MEASURMENT_MODE.iter() {
-        dev.smbus_write_byte_data(base_addr, *b)
-            .with_context(|| "Failed to write the Measurement Mode command")?;
-        base_addr += 1;
-    }
-    std::thread::sleep(std::time::Duration::from_millis(200));
-
-    let mut buf: [u8; 64] = [0; 64];
     loop {
+        let mut buf: [u8; 64] = [0; 64];
         dev.read(&mut buf)
             .with_context(|| "Failed to read response into buffer")?;
         match Measurement::try_from(&buf) {
@@ -79,13 +70,11 @@ fn read_sensor(
 }
 
 fn read_module(dev: &mut LinuxI2CDevice) -> anyhow::Result<apc1_core::Module> {
-    let mut buf: [u8; 23] = [0; 23];
-    let mut base_addr = 0x40_u8;
-    for b in i2c::READ_MODULE.iter() {
-        dev.smbus_write_byte_data(base_addr, *b)
+    for (index, byte) in i2c::Command::ReadModuleId.to_bytes().iter().enumerate() {
+        dev.smbus_write_byte_data(i2c::COMMAND_BASE_ADDR + index as u8, *byte)
             .with_context(|| "Failed to write the readmodule command")?;
-        base_addr += 1;
     }
+    let mut buf: [u8; 23] = [0; 23];
     let base_addr = 0x47_u8;
     for i in 0..23_u8 {
         buf[i as usize] = dev
@@ -100,6 +89,13 @@ pub async fn main() -> anyhow::Result<()> {
     let args = Args::parse();
     let mut dev = LinuxI2CDevice::new(args.i2c_device, i2c::DEVICE_ADDR.into())
         .with_context(|| "Unable to open the I2C device file. Is the i2c-dev module loaded?")?;
+
+    // Ensure the device is in a known state by requesting it reset.
+    for (index, byte) in i2c::Command::Reset.to_bytes().iter().enumerate() {
+        dev.smbus_write_byte_data(i2c::COMMAND_BASE_ADDR + index as u8, *byte)
+            .with_context(|| "Failed to write the readmodule command")?;
+    }
+    tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 
     match args.request {
         Request::Module => {
@@ -117,15 +113,6 @@ pub async fn main() -> anyhow::Result<()> {
             }
         }
         Request::Measurement => {
-            let command = vec![0x42, 0x4d, 0xe4, 0x00, 0x0F, 0x01, 0x74];
-            let mut base_addr = 0x40_u8;
-            for b in command.into_iter() {
-                dev.smbus_write_byte_data(base_addr, b)
-                    .with_context(|| "Failed to write the Measurement Mode command")?;
-                base_addr += 1;
-            }
-            std::thread::sleep(std::time::Duration::from_millis(200));
-
             let mut buf: [u8; 64] = [0; 64];
             for _ in 0..300 {
                 dev.read(&mut buf)
