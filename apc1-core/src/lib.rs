@@ -1,5 +1,7 @@
-pub mod request;
-pub mod response;
+mod request;
+mod response;
+
+pub use request::{uart, i2c};
 pub use response::{DeviceErrorCode, Measurement, Module};
 
 #[derive(thiserror::Error, Debug, PartialEq)]

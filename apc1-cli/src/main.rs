@@ -1,7 +1,7 @@
 use std::{num::NonZeroU64, path::PathBuf};
 
 use anyhow::Context;
-use apc1_core::request::i2c;
+use apc1_core::i2c;
 use apc1_core::Measurement;
 use clap::{Parser, Subcommand};
 use i2cdev::core::I2CDevice;

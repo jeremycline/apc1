@@ -22,7 +22,7 @@
 /// The response is also in big-endian byte order. The response size depends on the request.
 
 /// The magic number that starts each command.
-pub const MAGIC: &[u8; 2] = &[0x42, 0x4D];
+const MAGIC: &[u8; 2] = &[0x42, 0x4D];
 
 pub mod i2c {
 
