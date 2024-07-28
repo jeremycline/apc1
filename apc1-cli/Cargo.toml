@@ -12,7 +12,7 @@ anyhow = "1.0.86"
 clap = { version = "4", features = ["cargo", "derive", "env"] }
 i2cdev = "0.6.1"
 apc1-core = {version = "0.1", path = "../apc1-core"}
-sqlx = { version = "0.7", default-features = false, features = ["runtime-tokio", "tls-native-tls", "postgres", "macros", "migrate", "time", "uuid"] }
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "tls-native-tls", "postgres", "macros", "migrate", "time", "uuid"] }
 tokio = { version = "1", features = ["full"]}
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 tracing = "0.1.40"

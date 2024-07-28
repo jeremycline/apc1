@@ -34,7 +34,7 @@ enum Request {
         /// The database URI
         #[arg(env = "APC1_DB_URI")]
         db_uri: String,
-        /// How frequently to record a measurement.
+        /// How frequently (in seconds) to record a measurement.
         #[arg(long)]
         interval: NonZeroU64,
         /// Identifies where the device is.
@@ -69,7 +69,7 @@ fn read_sensor(
                 dest.blocking_send((measurement_time, measurement))?;
             }
             Err(e) => {
-                tracing::debug!(error=?e, "Measurement reading was invalid");
+                tracing::warn!(error=?e, "Measurement reading was invalid");
                 std::thread::sleep(std::time::Duration::from_millis(1100));
                 continue;
             }
