@@ -3,10 +3,12 @@ resolver = "2"
 members = [
     "apc1-core",
     "apc1-cli",
+    "apc1-embedded",
 ]
 
 [workspace.package]
 edition = "2021"
 license = "GPL-2.0"
 readme = "README.md"
+rust-version = "1.83"
 repository = "https://github.com/jeremycline/apc1/"

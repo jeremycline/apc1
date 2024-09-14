@@ -1,25 +1,25 @@
-/// Commands the host can send to the APC1.
-///
-/// Each command is 7 bytes in length. The format of each command is:
-///
-/// -----------------------------------------------
-/// | 2 bytes      | 1 byte  | 2 bytes | 2 bytes  |
-/// -----------------------------------------------
-/// | Magic Number | Command |  Mode   | Checksum |
-/// -----------------------------------------------
-///
-/// The command is in big-endian byte order. The checksum applies to all bytes in the command
-/// except the checksum itself.
-///
-/// The device responds in the following format:
-///
-/// ---------------------------------------------------------
-/// | 2 bytes      | 2 bytes      | Variable     | 2 bytes  |
-/// ---------------------------------------------------------
-/// | Magic Number | Frame length | Mode or Data | Checksum |
-/// ---------------------------------------------------------
-///
-/// The response is also in big-endian byte order. The response size depends on the request.
+//! Commands the host can send to the APC1.
+//!
+//! Each command is 7 bytes in length. The format of each command is:
+//!
+//! -----------------------------------------------
+//! | 2 bytes      | 1 byte  | 2 bytes | 2 bytes  |
+//! -----------------------------------------------
+//! | Magic Number | Command |  Mode   | Checksum |
+//! -----------------------------------------------
+//!
+//! The command is in big-endian byte order. The checksum applies to all bytes in the command
+//! except the checksum itself.
+//!
+//! The device responds in the following format:
+//!
+//! ---------------------------------------------------------
+//! | 2 bytes      | 2 bytes      | Variable     | 2 bytes  |
+//! ---------------------------------------------------------
+//! | Magic Number | Frame length | Mode or Data | Checksum |
+//! ---------------------------------------------------------
+//!
+//! The response is also in big-endian byte order. The response size depends on the request.
 
 /// The magic number that starts each command.
 const MAGIC: &[u8; 2] = &[0x42, 0x4D];

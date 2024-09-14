@@ -1,0 +1,19 @@
+[package]
+name = "apc1-embedded"
+version = "0.1.0"
+description = "Embedded driver for the Air Purification Combo ONE (APC1) devices from ScioSense."
+edition.workspace = true
+license.workspace = true
+readme.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies.apc1-core]
+version = "0.1"
+path = "../apc1-core"
+default-features = false
+features = ["embedded"]
+
+
+[dependencies.embedded-hal]
+version = "1.0"

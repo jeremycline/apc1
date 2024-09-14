@@ -145,7 +145,6 @@ pub async fn main() -> anyhow::Result<()> {
                 std::thread::sleep(std::time::Duration::from_millis(500));
             };
             tracing::info!(
-                name = device.name_and_type,
                 serial_number = device.serial_number,
                 "Detected APC1 sensor"
             );

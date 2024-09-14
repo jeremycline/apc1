@@ -16,7 +16,7 @@
 /// Checksum is the sum of the values of all bytes sent, excluding the checksum itself.
 ///
 /// All values are big endian.
-use std::fmt::Display;
+use core::fmt::Display;
 
 /// Measurement data from the APC1.
 ///
@@ -144,7 +144,7 @@ impl TryFrom<&[u8; 64]> for Measurement {
 }
 
 impl Display for Measurement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(
             f,
             concat!(
@@ -201,7 +201,7 @@ pub struct DeviceErrorCode(u8);
 // | Unused | Temp/Humidity Sensor | VOC Sensor | Laser | Fan Stopped | Photodiode | Fan-speed low | Too many Fan restarts |
 // -------------------------------------------------------------------------------------------------------------------------
 impl Display for DeviceErrorCode {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(
             f,
             concat!(
@@ -228,7 +228,7 @@ impl Display for DeviceErrorCode {
 #[derive(Debug, PartialEq, Eq)]
 pub struct Module {
     /// The module's name and type encoded as ASCII.
-    pub name_and_type: String,
+    pub name_and_type: [u8; 6],
     /// Module serial number.
     pub serial_number: u64,
     /// The delimiter character in the name_and_type string between the name and type.
@@ -259,8 +259,13 @@ impl TryFrom<&[u8; 23]> for Module {
             return Err(Self::Error::InvalidHeader);
         }
 
+        // The name is documented to be ASCII.
+        if !value.iter().skip(4).take(6).all(|c| c.is_ascii()) {
+            return Err(Self::Error::InvalidName)     
+        }
+
         Ok(Self {
-            name_and_type: value.iter().skip(4).take(6).map(|b| *b as char).collect(),
+            name_and_type: [value[4], value[5], value[6], value[7], value[8], value[9]],
             serial_number: u64::from_be_bytes([
                 value[10], value[11], value[12], value[13], value[14], value[15], value[16],
                 value[17],
@@ -273,15 +278,16 @@ impl TryFrom<&[u8; 23]> for Module {
 }
 
 impl Display for Module {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(
             f,
             concat!(
-                "Name and type: {}\n",
+                "Name and type: {:?}\n",
                 "Serial number: {}\n",
                 "Name/type delimiter: {}\n",
                 "Firmware version: {}.{}\n",
             ),
+            // TODO convert to something nice
             self.name_and_type,
             self.serial_number,
             self.delimiter,
@@ -346,7 +352,7 @@ mod test {
             6, 28,
         ];
         let actual: Module = valid_module.try_into().unwrap();
-        assert_eq!(actual.name_and_type, "APC1-I");
+        assert_eq!(actual.name_and_type, "APC1-I".as_bytes());
         assert_eq!(actual.serial_number, 607609401092424838_u64);
         assert_eq!(actual.delimiter, '-');
         assert_eq!(actual.fw_version_major, 0);
