@@ -3,6 +3,7 @@ resolver = "2"
 members = [
     "apc1-core",
     "apc1-cli",
+	"apc1-embedded",
 ]
 
 [workspace.package]

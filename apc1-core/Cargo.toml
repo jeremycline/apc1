@@ -9,3 +9,8 @@ repository.workspace = true
 
 [dependencies]
 thiserror = "1.0.61"
+embedded-hal = { version = "1.0", optional = true}
+
+[features]
+default = []
+embedded = ["embedded-hal"]
