@@ -8,4 +8,4 @@ readme.workspace = true
 repository.workspace = true
 
 [dependencies]
-thiserror = "1.0.61"
+thiserror = "2.0.3"
